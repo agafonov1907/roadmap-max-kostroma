@@ -1,7 +1,7 @@
 const data = [
   {
-    id: "digital",
-    title: "Цифровые госуслуги",
+    id: "messenger",
+    title: "Роадмап внедрения национального мессенджера MAX в Костромской области",
     milestones: [
       {
         title: "Единый портал услуг",
@@ -24,8 +24,8 @@ const data = [
     ]
   },
   {
-    id: "infra",
-    title: "Инфраструктура",
+    id: "healthcare",
+    title: "Роадмап сферы здравоохранения",
     milestones: [
       {
         title: "Обновление ЦОД",
@@ -42,6 +42,30 @@ const data = [
         status: "planned",
         activities: [
           "Разработка политики backup"
+        ]
+      }
+    ]
+  },
+  {
+    id: "housing",
+    title: "Роадмап сферы ЖКХ",
+    milestones: [
+      {
+        title: "Интеграция систем расчётов",
+        date: "2025-03",
+        status: "planned",
+        activities: [
+          "Анализ текущих платформ",
+          "Выбор единой системы"
+        ]
+      },
+      {
+        title: "Подключение управляющих компаний",
+        date: "2025-06",
+        status: "planned",
+        activities: [
+          "Техническое подключение",
+          "Обучение сотрудников"
         ]
       }
     ]
@@ -64,6 +88,11 @@ function renderDirections() {
 
 function openDirection(id) {
   const direction = data.find(d => d.id === id);
+
+  if (!direction) {
+    console.error("Направление не найдено:", id);
+    return;
+  }
 
   app.innerHTML = `
     <button class="back" onclick="renderDirections()">← Назад</button>
@@ -118,4 +147,5 @@ function openDirection(id) {
   render();
 }
 
+// Запуск отображения главного экрана
 renderDirections();
