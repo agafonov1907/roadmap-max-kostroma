@@ -1,29 +1,5 @@
 const data = [
   {
-    id: "messenger",
-    title: "Роадмап внедрения национального мессенджера MAX в Костромской области",
-    milestones: [
-      {
-        title: "Единый портал услуг",
-        date: "2024-06",
-        status: "done",
-        activities: [
-          "Запуск MVP портала",
-          "Интеграция ключевых услуг"
-        ]
-      },
-      {
-        title: "Мобильное приложение",
-        date: "2024-12",
-        status: "progress",
-        activities: [
-          "UX/UI дизайн",
-          "Бета-тестирование"
-        ]
-      }
-    ]
-  },
-  {
     id: "healthcare",
     title: "Роадмап сферы здравоохранения",
     milestones: [
