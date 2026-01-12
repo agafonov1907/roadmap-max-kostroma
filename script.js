@@ -9,7 +9,7 @@ const data = [
         status: "done",
         activities: [
           "Запуск MVP портала",
-          "Интеграция базовых услуг"
+          "Интеграция ключевых услуг"
         ]
       },
       {
@@ -45,41 +45,8 @@ const data = [
         ]
       }
     ]
-  },
-  {
-    id: "security",
-    title: "Кибербезопасность",
-    milestones: [
-      {
-        title: "SOC центр",
-        date: "2024-08",
-        status: "done",
-        activities: [
-          "Набор команды",
-          "Внедрение SIEM"
-        ]
-      },
-      {
-        title: "Обучение сотрудников",
-        date: "2025-01",
-        status: "planned",
-        activities: [
-          "Фишинг-симуляции",
-          "Онлайн-курсы"
-        ]
-      }
-    ]
   }
 ];
-
-function formatMonthYear(dateStr) {
-  const [year, month] = dateStr.split('-');
-  const months = [
-    'январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
-    'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'
-  ];
-  return `${months[parseInt(month, 10) - 1]} ${year}`;
-}
 
 const app = document.getElementById("app");
 
@@ -87,9 +54,9 @@ function renderDirections() {
   app.innerHTML = `
     <div class="directions">
       ${data.map(d => `
-        <button type="button" class="direction-card" onclick="openDirection('${d.id}')">
-          <strong>${d.title}</strong>
-        </button>
+        <div class="direction-card" onclick="openDirection('${d.id}')">
+          ${d.title}
+        </div>
       `).join("")}
     </div>
   `;
@@ -97,12 +64,9 @@ function renderDirections() {
 
 function openDirection(id) {
   const direction = data.find(d => d.id === id);
-  if (!direction) return;
-
-  history.pushState({ view: 'direction', id }, '', `#${id}`);
 
   app.innerHTML = `
-    <button class="back" onclick="goBack()">← Назад</button>
+    <button class="back" onclick="renderDirections()">← Назад</button>
 
     <div class="controls">
       <select id="statusFilter">
@@ -112,7 +76,7 @@ function openDirection(id) {
         <option value="done">Завершено</option>
       </select>
 
-      <input id="search" placeholder="Поиск по задачам..." />
+      <input id="search" placeholder="Поиск..." />
     </div>
 
     <div class="timeline" id="timeline"></div>
@@ -120,68 +84,38 @@ function openDirection(id) {
 
   const timeline = document.getElementById("timeline");
   const statusFilter = document.getElementById("statusFilter");
-  const searchInput = document.getElementById("search");
+  const search = document.getElementById("search");
 
-  const sortedMilestones = [...direction.milestones].sort((a, b) => a.date.localeCompare(b.date));
-
-  function renderMilestones() {
+  function render() {
     const status = statusFilter.value;
-    const query = searchInput.value.trim().toLowerCase();
+    const query = search.value.toLowerCase();
 
-    const filtered = sortedMilestones
+    timeline.innerHTML = direction.milestones
       .filter(m => !status || m.status === status)
       .filter(m =>
         m.title.toLowerCase().includes(query) ||
         m.activities.some(a => a.toLowerCase().includes(query))
-      );
-
-    if (filtered.length === 0) {
-      timeline.innerHTML = `<div class="empty-state">Ничего не найдено</div>`;
-      return;
-    }
-
-    timeline.innerHTML = filtered.map(m => `
-      <div class="milestone">
-        <div class="milestone-header">
-          <strong>${m.title}</strong>
-          <span class="status ${m.status}">
-            ${m.status === "planned" ? "Запланировано" :
-              m.status === "progress" ? "В работе" : "Завершено"}
-          </span>
+      )
+      .map(m => `
+        <div class="milestone">
+          <div class="milestone-header">
+            <strong>${m.title}</strong>
+            <span class="status ${m.status}">
+              ${m.status === "planned" ? "Запланировано" :
+                m.status === "progress" ? "В работе" : "Завершено"}
+            </span>
+          </div>
+          <div class="date">Срок: ${m.date}</div>
+          <ul>
+            ${m.activities.map(a => `<li>${a}</li>`).join("")}
+          </ul>
         </div>
-        <div class="date">Срок: ${formatMonthYear(m.date)}</div>
-        <ul>
-          ${m.activities.map(a => `<li>${a}</li>`).join("")}
-        </ul>
-      </div>
-    `).join("");
+      `).join("");
   }
 
-  statusFilter.addEventListener('change', renderMilestones);
-  searchInput.addEventListener('input', renderMilestones);
-
-  renderMilestones();
+  statusFilter.onchange = render;
+  search.oninput = render;
+  render();
 }
 
-function goBack() {
-  history.back();
-}
-
-window.addEventListener('popstate', (event) => {
-  if (event.state?.view === 'direction') {
-    openDirection(event.state.id);
-  } else {
-    renderDirections();
-  }
-});
-
-// Инициализация при загрузке
-if (window.location.hash) {
-  const id = window.location.hash.slice(1);
-  const dir = data.find(d => d.id === id);
-  if (dir) {
-    openDirection(id);
-    return;
-  }
-}
 renderDirections();
