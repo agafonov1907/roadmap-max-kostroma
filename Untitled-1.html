@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Стратегический роадмап</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --gray: #b0b0b0;
+      --yellow: #f5c542;
+      --green: #4caf50;
+      --bg: #f7f8fa;
+      --text: #222;
+      --card: #ffffff;
+      --border: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      padding: 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    main {
+      padding: 16px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    /* === Направления === */
+    .directions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .direction-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+
+    .direction-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    /* === Панель управления === */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    select, input {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: #ddd;
+    }
+
+    /* === Timeline === */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .milestone {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .milestone-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .status {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .status.planned { background: var(--gray); }
+    .status.progress { background: var(--yellow); color: #000; }
+    .status.done { background: var(--green); }
+
+    .date {
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      margin-top: 8px;
+      padding-left: 18px;
+    }
+
+    li {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .back {
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Стратегический роадмап</h1>
+</header>
+
+<main id="app"></main>
+
+<script>
+  const data = [
+    {
+      id: "digital",
+      title: "Цифровые госуслуги",
+      milestones: [
+        {
+          title: "Единый портал услуг",
+          date: "2024-06",
+          status: "done",
+          activities: [
+            "Запуск MVP портала",
+            "Интеграция базовых услуг"
+          ]
+        },
+        {
+          title: "Мобильное приложение",
+          date: "2024-12",
+          status: "progress",
+          activities: [
+            "UX/UI дизайн",
+            "Бета-тестирование"
+          ]
+        }
+      ]
+    },
+    {
+      id: "infra",
+      title: "Инфраструктура",
+      milestones: [
+        {
+          title: "Обновление ЦОД",
+          date: "2024-09",
+          status: "progress",
+          activities: [
+            "Закупка оборудования",
+            "Миграция сервисов"
+          ]
+        },
+        {
+          title: "Резервное копирование",
+          date: "2025-02",
+          status: "planned",
+          activities: [
+            "Разработка политики backup"
+          ]
+        }
+      ]
+    },
+    {
+      id: "security",
+      title: "Кибербезопасность",
+      milestones: [
+        {
+          title: "SOC центр",
+          date: "2024-08",
+          status: "done",
+          activities: [
+            "Набор команды",
+            "Внедрение SIEM"
+          ]
+        },
+        {
+          title: "Обучение сотрудников",
+          date: "2025-01",
+          status: "planned",
+          activities: [
+            "Фишинг-симуляции",
+            "Онлайн-курсы"
+          ]
+        }
+      ]
+    }
+  ];
+
+  const app = document.getElementById("app");
+
+  function renderDirections() {
+    app.innerHTML = `
+      <div class="directions">
+        ${data.map(d => `
+          <div class="direction-card" onclick="openDirection('${d.id}')">
+            <strong>${d.title}</strong>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  function openDirection(id) {
+    const direction = data.find(d => d.id === id);
+
+    app.innerHTML = `
+      <button class="back" onclick="renderDirections()">← Назад</button>
+
+      <div class="controls">
+        <select id="statusFilter">
+          <option value="">Все статусы</option>
+          <option value="planned">Запланировано</option>
+          <option value="progress">В работе</option>
+          <option value="done">Завершено</option>
+        </select>
+
+        <input id="search" placeholder="Поиск..." />
+      </div>
+
+      <div class="timeline" id="timeline"></div>
+    `;
+
+    const timeline = document.getElementById("timeline");
+    const statusFilter = document.getElementById("statusFilter");
+    const searchInput = document.getElementById("search");
+
+    function renderMilestones() {
+      const status = statusFilter.value;
+      const query = searchInput.value.toLowerCase();
+
+      timeline.innerHTML = direction.milestones
+        .filter(m => !status || m.status === status)
+        .filter(m =>
+          m.title.toLowerCase().includes(query) ||
+          m.activities.some(a => a.toLowerCase().includes(query))
+        )
+        .map(m => `
+          <div class="milestone">
+            <div class="milestone-header">
+              <strong>${m.title}</strong>
+              <span class="status ${m.status}">
+                ${m.status === "planned" ? "Запланировано" :
+                  m.status === "progress" ? "В работе" : "Завершено"}
+              </span>
+            </div>
+            <div class="date">Срок: ${m.date}</div>
+            <ul>
+              ${m.activities.map(a => `<li>${a}</li>`).join("")}
+            </ul>
+          </div>
+        `).join("");
+    }
+
+    statusFilter.onchange = renderMilestones;
+    searchInput.oninput = renderMilestones;
+
+    renderMilestones();
+  }
+
+  renderDirections();
+</script>
+
+</body>
+</html>
