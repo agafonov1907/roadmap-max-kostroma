@@ -1,56 +1,24 @@
-const data = [
-  {
-    id: "healthcare",
-    title: "Роадмап сферы здравоохранения",
-    milestones: [
-      {
-        title: "Обновление ЦОД",
-        date: "2024-09",
-        status: "progress",
-        activities: [
-          "Закупка оборудования",
-          "Миграция сервисов"
-        ]
-      },
-      {
-        title: "Резервное копирование",
-        date: "2025-02",
-        status: "planned",
-        activities: [
-          "Разработка политики backup"
-        ]
-      }
-    ]
-  },
-  {
-    id: "housing",
-    title: "Роадмап сферы ЖКХ",
-    milestones: [
-      {
-        title: "Интеграция систем расчётов",
-        date: "2025-03",
-        status: "planned",
-        activities: [
-          "Анализ текущих платформ",
-          "Выбор единой системы"
-        ]
-      },
-      {
-        title: "Подключение управляющих компаний",
-        date: "2025-06",
-        status: "planned",
-        activities: [
-          "Техническое подключение",
-          "Обучение сотрудников"
-        ]
-      }
-    ]
+let data = [];
+
+async function loadData() {
+  try {
+    const response = await fetch('data.json');
+    data = await response.json();
+    renderDirections();
+  } catch (error) {
+    console.error('Ошибка загрузки data.json:', error);
+    app.innerHTML = '<div class="no-results">Не удалось загрузить данные</div>';
   }
-];
+}
 
 const app = document.getElementById("app");
 
 function renderDirections() {
+  if (!data || data.length === 0) {
+    app.innerHTML = '<div class="no-results">Нет данных для отображения</div>';
+    return;
+  }
+
   app.classList.add('fade-out');
   setTimeout(() => {
     app.innerHTML = `
@@ -68,7 +36,6 @@ function renderDirections() {
 
 function openDirection(id) {
   const direction = data.find(d => d.id === id);
-
   if (!direction) {
     console.error("Направление не найдено:", id);
     return;
@@ -78,7 +45,6 @@ function openDirection(id) {
   setTimeout(() => {
     app.innerHTML = `
       <button class="back" onclick="renderDirections()">← Назад</button>
-
       <div class="controls">
         <select id="statusFilter">
           <option value="">Все статусы</option>
@@ -86,10 +52,8 @@ function openDirection(id) {
           <option value="progress">В работе</option>
           <option value="done">Завершено</option>
         </select>
-
         <input id="search" placeholder="Поиск..." />
       </div>
-
       <div class="timeline" id="timeline"></div>
     `;
 
@@ -105,10 +69,17 @@ function openDirection(id) {
         .filter(m => !status || m.status === status)
         .filter(m =>
           m.title.toLowerCase().includes(query) ||
-          m.activities.some(a => a.toLowerCase().includes(query))
+          m.activities.some(a =>
+            a.title.toLowerCase().includes(query) ||
+            (a.responsible && a.responsible.toLowerCase().includes(query))
+          )
         );
 
-      // Рендерим скрытые карточки
+      if (filtered.length === 0) {
+        timeline.innerHTML = '<div class="no-results">Ничего не найдено</div>';
+        return;
+      }
+
       timeline.innerHTML = filtered
         .map(m => `
           <div class="milestone">
@@ -121,17 +92,21 @@ function openDirection(id) {
             </div>
             <div class="date">Срок: ${m.date}</div>
             <ul>
-              ${m.activities.map(a => `<li>${a}</li>`).join("")}
+              ${m.activities.map(a => `
+                <li>
+                  ${a.title}
+                  ${a.responsible ? `<span class="responsible">— ${a.responsible}</span>` : ''}
+                </li>
+              `).join("")}
             </ul>
           </div>
         `).join("");
 
-      // Плавное появление с задержкой
+      // Анимация появления этапов
       setTimeout(() => {
         timeline.querySelectorAll('.milestone').forEach((el, i) => {
-          setTimeout(() => {
-            el.classList.add('visible');
-          }, i * 80);
+          el.style.transitionDelay = `${i * 80}ms`;
+          el.classList.add('visible');
         });
       }, 10);
     }
@@ -144,5 +119,5 @@ function openDirection(id) {
   }, 300);
 }
 
-// Инициализация
-renderDirections();
+// Запуск загрузки данных при старте
+loadData();

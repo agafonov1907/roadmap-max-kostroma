@@ -28,7 +28,7 @@ body {
   min-height: 100vh;
 }
 
-/* Общее затемнение фона всего сайта */
+/* Общее затемнение фона */
 body::before {
   content: "";
   position: fixed;
@@ -41,7 +41,7 @@ body::before {
 header {
   padding: 24px 16px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.4); /* ← ключевое отличие! */
+  background: rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 10;
 }
@@ -58,12 +58,11 @@ header h1 {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Основной контент — НЕ белый текст! */
+/* Основной контент */
 main {
   max-width: 1000px;
   margin: 24px auto;
   padding: 0 16px;
-  /* color: white; ← УБРАНО! Текст в карточках — тёмный */
 }
 
 /* === Плавные переходы между экранами === */
@@ -166,7 +165,6 @@ button.back:hover {
   color: #111;
   padding: 16px;
   border-radius: 12px;
-  /* Анимация при фильтрации */
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity 0.4s ease, transform 0.4s ease;
@@ -209,7 +207,25 @@ ul {
 
 li {
   font-size: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+/* === Ответственное лицо === */
+.responsible {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* === Сообщение об отсутствии результатов === */
+.no-results {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
 }
 
 /* === Mobile === */
