@@ -7,7 +7,7 @@ async function loadData() {
     renderDirections();
   } catch (error) {
     console.error('Ошибка загрузки data.json:', error);
-    app.innerHTML = '<div class="no-results">Не удалось загрузить данные</div>';
+    document.getElementById("app").innerHTML = '<div class="no-results">Не удалось загрузить данные</div>';
   }
 }
 
@@ -48,9 +48,9 @@ function openDirection(id) {
       <div class="controls">
         <select id="statusFilter">
           <option value="">Все статусы</option>
-          <option value="planned">Запланировано</option>
-          <option value="progress">В работе</option>
-          <option value="done">Завершено</option>
+          <option value="Не выполнено">Не выполнено</option>
+          <option value="В работе">В работе</option>
+          <option value="Выполнено">Выполнено</option>
         </select>
         <input id="search" placeholder="Поиск..." />
       </div>
@@ -85,9 +85,8 @@ function openDirection(id) {
           <div class="milestone">
             <div class="milestone-header">
               <strong>${m.title}</strong>
-              <span class="status ${m.status}">
-                ${m.status === "planned" ? "Запланировано" :
-                  m.status === "progress" ? "В работе" : "Завершено"}
+              <span class="status" data-status="${m.status}">
+                ${m.status}
               </span>
             </div>
             <div class="date">Срок: ${m.date}</div>
@@ -102,10 +101,9 @@ function openDirection(id) {
           </div>
         `).join("");
 
-      // Анимация появления этапов
+      // Анимация появления
       setTimeout(() => {
         timeline.querySelectorAll('.milestone').forEach((el, i) => {
-          el.style.transitionDelay = `${i * 80}ms`;
           el.classList.add('visible');
         });
       }, 10);
@@ -119,5 +117,5 @@ function openDirection(id) {
   }, 300);
 }
 
-// Запуск загрузки данных при старте
+// Запуск при загрузке
 loadData();
