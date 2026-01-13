@@ -1,5 +1,17 @@
 let data = [];
 
+// Вспомогательная функция: преобразует "2024-06" → { year: 2024, month: 6 }
+function parseDate(dateStr) {
+  const [year, month] = dateStr.split('-').map(Number);
+  return { year, month };
+}
+
+// Названия месяцев на русском
+const MONTHS_RU = [
+  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+];
+
 async function loadData() {
   try {
     const response = await fetch('data.json');
@@ -65,7 +77,8 @@ function openDirection(id) {
       const status = statusFilter.value;
       const query = search.value.toLowerCase();
 
-      const filtered = direction.milestones
+      // Фильтрация этапов
+      let filteredMilestones = direction.milestones
         .filter(m => !status || m.status === status)
         .filter(m =>
           m.title.toLowerCase().includes(query) ||
@@ -75,35 +88,60 @@ function openDirection(id) {
           )
         );
 
-      if (filtered.length === 0) {
+      if (filteredMilestones.length === 0) {
         timeline.innerHTML = '<div class="no-results">Ничего не найдено</div>';
         return;
       }
 
-      timeline.innerHTML = filtered
-        .map(m => `
-          <div class="milestone">
-            <div class="milestone-header">
-              <strong>${m.title}</strong>
-              <span class="status" data-status="${m.status}">
-                ${m.status}
-              </span>
-            </div>
-            <div class="date">Срок: ${m.date}</div>
-            <ul>
-              ${m.activities.map(a => `
-                <li>
-                  ${a.title}
-                  ${a.responsible ? `<span class="responsible">— ${a.responsible}</span>` : ''}
-                </li>
-              `).join("")}
-            </ul>
-          </div>
-        `).join("");
+      // Группировка: год → месяц → этапы
+      const grouped = {};
+      filteredMilestones.forEach(m => {
+        const { year, month } = parseDate(m.date);
+        if (!grouped[year]) grouped[year] = {};
+        if (!grouped[year][month]) grouped[year][month] = [];
+        grouped[year][month].push(m);
+      });
 
-      // Анимация появления
+      // Формирование HTML
+      let html = '';
+      Object.keys(grouped)
+        .sort((a, b) => b - a) // Сначала новые года
+        .forEach(year => {
+          html += `<h2 class="year-header">${year}</h2>`;
+          const months = grouped[year];
+          Object.keys(months)
+            .sort((a, b) => a - b) // Январь → Декабрь
+            .forEach(monthNum => {
+              const monthName = MONTHS_RU[parseInt(monthNum) - 1];
+              html += `<h3 class="month-header">${monthName}</h3>`;
+              months[monthNum].forEach(m => {
+                html += `
+                  <div class="milestone">
+                    <div class="milestone-header">
+                      <strong>${m.title}</strong>
+                      <span class="status" data-status="${m.status}">
+                        ${m.status}
+                      </span>
+                    </div>
+                    <ul>
+                      ${m.activities.map(a => `
+                        <li>
+                          ${a.title}
+                          ${a.responsible ? `<span class="responsible">— ${a.responsible}</span>` : ''}
+                        </li>
+                      `).join("")}
+                    </ul>
+                  </div>
+                `;
+              });
+            });
+        });
+
+      timeline.innerHTML = html;
+
+      // Анимация появления (опционально)
       setTimeout(() => {
-        timeline.querySelectorAll('.milestone').forEach((el, i) => {
+        timeline.querySelectorAll('.milestone').forEach(el => {
           el.classList.add('visible');
         });
       }, 10);
@@ -117,5 +155,5 @@ function openDirection(id) {
   }, 300);
 }
 
-// Запуск при загрузке
+// Запуск
 loadData();
