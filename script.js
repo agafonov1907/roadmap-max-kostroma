@@ -37,18 +37,15 @@ function renderEmployeeCards() {
   app.classList.add('fade-out');
   setTimeout(() => {
     const cards = employees.map(emp => {
-      const total = emp.tasks.length;
-      const completed = emp.tasks.filter(t => t.status === "Выполнено").length;
-      const inProgress = emp.tasks.filter(t => t.status === "В работе").length;
-      const notStarted = total - completed - inProgress;
-      const loadClass = getLoadClass(inProgress);
+      const k = emp.kpi;
+      const loadClass = getLoadClass(k.in_progress);
 
       return `
         <div class="employee-card ${loadClass}" onclick="openEmployee('${emp.id}')">
           <strong>${emp.name}</strong>
           <div class="kpi-summary">
-            Всего задач: ${total}<br>
-            В работе: ${inProgress} • Выполнено: ${completed} • Не начато: ${notStarted}
+            Всего: ${k.total} • В работе: ${k.in_progress}<br>
+            На неделе: ${k.this_week} • В месяце: ${k.this_month}
           </div>
         </div>
       `;
@@ -105,7 +102,6 @@ function openEmployee(id) {
         return;
       }
 
-      // Группировка по году → месяцу
       const grouped = {};
       tasks.forEach(t => {
         const { year, month } = parseDate(t.date);
@@ -120,12 +116,16 @@ function openEmployee(id) {
         Object.keys(grouped[year]).sort((a, b) => a - b).forEach(m => {
           html += `<h3 class="month-header">${MONTHS_RU[parseInt(m)-1]}</h3>`;
           grouped[year][m].forEach(t => {
+            const deadlineHtml = t.deadline ? `<div class="deadline">Дедлайн: ${t.deadline}</div>` : '';
+            const linkHtml = t.link ? `<a href="${t.link}" target="_blank" class="task-link">📎 Ссылка</a>` : '';
             html += `
               <div class="task">
                 <div class="task-header">
                   <strong>${t.title}</strong>
                   <span class="status" data-status="${t.status}">${t.status}</span>
                 </div>
+                ${deadlineHtml}
+                ${linkHtml}
                 <ul>
                   ${t.activities.map(a => `
                     <li>

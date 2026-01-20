@@ -2,13 +2,30 @@
   {
     "id": "bunetskiy",
     "name": "Бунецкий А.В.",
+    "kpi": {
+      "total": 1,
+      "completed": 0,
+      "in_progress": 1,
+      "not_started": 0,
+      "this_week": 0,
+      "this_month": 0
+    },
     "tasks": [
       {
         "title": "Интеграция MAX с ЕПГУ",
-        "date": "2024-06",
-        "status": "Выполнено",
+        "date": "2024-06-15",
+        "deadline": "2024-07-15 00:00:00",
+        "status": "В работе",
+        "link": "https://tasks.example.com/123",
         "activities": [
-          { "title": "Согласование API", "responsible": "Бунецкий А.В." }
+          {
+            "title": "Согласование API",
+            "responsible": "Бунецкий А.В."
+          },
+          {
+            "title": "Тестирование",
+            "responsible": "Бунецкий А.В."
+          }
         ]
       }
     ]

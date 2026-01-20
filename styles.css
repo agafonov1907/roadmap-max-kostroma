@@ -65,7 +65,7 @@ main {
   opacity: 0 !important;
 }
 
-/* === Карточки сотрудников с цветовой индикацией нагрузки === */
+/* === Карточки сотрудников === */
 .employee-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -83,14 +83,12 @@ main {
   transform: translateY(20px);
   animation: fadeInUp 0.5s forwards;
   position: relative;
-  /* Базовая левая полоса — будет переопределена */
   border-left: 4px solid #ccc;
 }
 
-/* Цвета нагрузки */
-.employee-card.load-high    { border-left-color: #f44336; } /* Красный — высокая */
-.employee-card.load-medium  { border-left-color: #ff9800; } /* Оранжевый — средняя */
-.employee-card.load-low     { border-left-color: #4caf50; } /* Зелёный — низкая */
+.employee-card.load-high    { border-left-color: #f44336; }
+.employee-card.load-medium  { border-left-color: #ff9800; }
+.employee-card.load-low     { border-left-color: #4caf50; }
 
 .employee-card:nth-child(1) { animation-delay: 0.1s; }
 .employee-card:nth-child(2) { animation-delay: 0.2s; }
@@ -108,7 +106,6 @@ main {
   }
 }
 
-/* KPI под именем */
 .kpi-summary {
   margin-top: 12px;
   font-size: 13px;
@@ -181,6 +178,27 @@ button.back {
 .status[data-status="Не выполнено"] { background: var(--not-started); }
 .status[data-status="В работе"]      { background: var(--in-progress); color: #000; }
 .status[data-status="Выполнено"]    { background: var(--completed); }
+
+/* === Дедлайн === */
+.deadline {
+  font-size: 13px;
+  color: #d32f2f;
+  font-weight: 500;
+  margin: 6px 0;
+}
+
+/* === Ссылка на задачу === */
+.task-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.task-link:hover {
+  text-decoration: underline;
+}
 
 .year-header {
   margin-top: 32px;
