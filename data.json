@@ -1,30 +1,162 @@
 [
   {
-    "id": "bunetskiy",
-    "name": "Бунецкий А.В.",
+    "id": "andreeva",
+    "name": "Андреева Л.А.",
     "kpi": {
-      "total": 1,
+      "total": 3,
       "completed": 0,
-      "in_progress": 1,
+      "in_progress": 3,
       "not_started": 0,
       "this_week": 0,
       "this_month": 0
     },
     "tasks": [
       {
-        "title": "Интеграция MAX с ЕПГУ",
-        "date": "2024-06-15",
-        "deadline": "2024-07-15 00:00:00",
+        "title": "Целевое обучение",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-03-01 00:00:00",
         "status": "В работе",
-        "link": "https://tasks.example.com/123",
+        "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA7518357FF375%253A45C9C57BE1574BA643258D92004F60F2%253Fprojection%255C2default;p=1342759541",
         "activities": [
           {
-            "title": "Согласование API",
+            "title": "Сбор данных рб итогах сесии",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      },
+      {
+        "title": "РПЦТ",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-02-26 00:00:00",
+        "status": "В работе",
+        "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA75183586F115%253A6EB31E265F644BA843258D8F00346576%253Fprojection%255C2default;p=514127451",
+        "activities": [
+          {
+            "title": "Ответ в ДЭР по  КНД",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      },
+      {
+        "title": "Яндекс Общий",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-02-16 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Ответы кураторов",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bunetskiy",
+    "name": "Бунецкий А.В.",
+    "kpi": {
+      "total": 4,
+      "completed": 0,
+      "in_progress": 4,
+      "not_started": 0,
+      "this_week": 0,
+      "this_month": 0
+    },
+    "tasks": [
+      {
+        "title": "МТС ИИ",
+        "date": "2025-02-22 00:00:00",
+        "deadline": "2025-02-23 00:00:00",
+        "status": "В работе",
+        "link": "none",
+        "activities": [
+          {
+            "title": "Письмо по ПСД вопросы",
             "responsible": "Бунецкий А.В."
           },
           {
-            "title": "Тестирование",
+            "title": "ВКС ИТ-бот",
             "responsible": "Бунецкий А.В."
+          }
+        ]
+      },
+      {
+        "title": "Бот ДЦР",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-02-16 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Направить на проверку с видео",
+            "responsible": "Бунецкий А.В."
+          }
+        ]
+      },
+      {
+        "title": "Бот ЗАГС",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-02-16 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Направить на проверку с видео",
+            "responsible": "Бунецкий А.В."
+          }
+        ]
+      },
+      {
+        "title": "Цифровое развитие",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-02-16 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Письмо отраслевые показатели ФОИВ по цифровизации",
+            "responsible": "Бунецкий А.В."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "katenin",
+    "name": "Катенин Д.А.",
+    "kpi": {
+      "total": 2,
+      "completed": 0,
+      "in_progress": 2,
+      "not_started": 0,
+      "this_week": 0,
+      "this_month": 0
+    },
+    "tasks": [
+      {
+        "title": "РГИС ЖКХ",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-03-01 00:00:00",
+        "status": "В работе",
+        "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA75183586F115%253A4FA0DD99F940B2FA43258D9200446478%253Fprojection%255C2default;p=-2077443490",
+        "activities": [
+          {
+            "title": "Изменение в НПА сбор предложений",
+            "responsible": "Катенин Д.А."
+          }
+        ]
+      },
+      {
+        "title": "КСКО",
+        "date": "2025-02-02 00:00:00",
+        "deadline": "2025-02-26 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Свод КСКО",
+            "responsible": "Катенин Д.А."
           }
         ]
       }

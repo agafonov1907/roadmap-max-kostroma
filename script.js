@@ -1,10 +1,5 @@
 let employees = [];
 
-const MONTHS_RU = [
-  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-];
-
 async function loadData() {
   try {
     const res = await fetch('data.json');
@@ -14,11 +9,6 @@ async function loadData() {
     console.error(e);
     document.getElementById("app").innerHTML = '<div class="no-results">Ошибка загрузки</div>';
   }
-}
-
-function parseDate(dateStr) {
-  const [y, m] = dateStr.split('-').map(Number);
-  return { year: y, month: m };
 }
 
 function getLoadClass(inProgressCount) {
@@ -66,89 +56,72 @@ function openEmployee(id) {
     app.innerHTML = `
       <button class="back" onclick="renderEmployeeCards()">← Назад</button>
       <div class="controls">
-        <select id="statusFilter">
-          <option value="">Все статусы</option>
-          <option value="Не выполнено">Не выполнено</option>
-          <option value="В работе">В работе</option>
-          <option value="Выполнено">Выполнено</option>
-        </select>
         <input id="search" placeholder="Поиск по задачам..." />
       </div>
-      <div class="timeline" id="timeline"></div>
+      <div class="kanban-board" id="kanbanBoard"></div>
     `;
 
-    const timeline = document.getElementById("timeline");
-    const statusFilter = document.getElementById("statusFilter");
-    const search = document.getElementById("search");
+    const kanbanBoard = document.getElementById("kanbanBoard");
+    const searchInput = document.getElementById("search");
 
     function render() {
-      let tasks = emp.tasks;
-      const status = statusFilter.value;
-      const query = search.value.toLowerCase();
+      const query = searchInput.value.toLowerCase();
 
-      if (status) tasks = tasks.filter(t => t.status === status);
-      if (query) {
-        tasks = tasks.filter(t =>
-          t.title.toLowerCase().includes(query) ||
-          t.activities.some(a =>
-            a.title.toLowerCase().includes(query) ||
-            a.responsible.toLowerCase().includes(query)
-          )
-        );
-      }
+      // Фильтрация задач
+      const filteredTasks = emp.tasks.filter(t =>
+        t.title.toLowerCase().includes(query) ||
+        t.activities.some(a =>
+          a.title.toLowerCase().includes(query) ||
+          a.responsible.toLowerCase().includes(query)
+        )
+      );
 
-      if (tasks.length === 0) {
-        timeline.innerHTML = '<div class="no-results">Ничего не найдено</div>';
-        return;
-      }
+      // Группировка по статусу
+      const columns = {
+        "Не выполнено": [],
+        "В работе": [],
+        "Выполнено": []
+      };
 
-      const grouped = {};
-      tasks.forEach(t => {
-        const { year, month } = parseDate(t.date);
-        if (!grouped[year]) grouped[year] = {};
-        if (!grouped[year][month]) grouped[year][month] = [];
-        grouped[year][month].push(t);
+      filteredTasks.forEach(task => {
+        if (columns[task.status]) {
+          columns[task.status].push(task);
+        }
       });
 
-      let html = '';
-      Object.keys(grouped).sort((a, b) => b - a).forEach(year => {
-        html += `<h2 class="year-header">${year}</h2>`;
-        Object.keys(grouped[year]).sort((a, b) => a - b).forEach(m => {
-          html += `<h3 class="month-header">${MONTHS_RU[parseInt(m)-1]}</h3>`;
-          grouped[year][m].forEach(t => {
-            const deadlineHtml = t.deadline ? `<div class="deadline">Дедлайн: ${t.deadline}</div>` : '';
-            const linkHtml = t.link ? `<a href="${t.link}" target="_blank" class="task-link">📎 Ссылка</a>` : '';
-            html += `
-              <div class="task">
-                <div class="task-header">
-                  <strong>${t.title}</strong>
-                  <span class="status" data-status="${t.status}">${t.status}</span>
-                </div>
-                ${deadlineHtml}
-                ${linkHtml}
-                <ul>
-                  ${t.activities.map(a => `
-                    <li>
-                      ${a.title}
-                      ${a.responsible ? `<span class="responsible">— ${a.responsible}</span>` : ''}
-                    </li>
-                  `).join("")}
-                </ul>
-              </div>
-            `;
-          });
-        });
-      });
+      // Рендер колонок
+      kanbanBoard.innerHTML = Object.entries(columns).map(([status, tasks]) => `
+        <div class="kanban-column">
+          <div class="column-header" data-status="${status}">${status} (${tasks.length})</div>
+          ${tasks.map(t => `
+            <div class="task-card">
+              <div class="task-title">${t.title}</div>
+              ${t.deadline ? `<div class="deadline">Дедлайн: ${t.deadline}</div>` : ''}
+              ${t.link ? `<a href="${t.link}" target="_blank" class="task-link">📎 Ссылка</a>` : ''}
+              <ul>
+                ${t.activities.map(a => `
+                  <li>
+                    ${a.title}
+                    ${a.deadline ? `<div class="activity-deadline">До: ${a.deadline}</div>` : ''}
+                    ${a.responsible ? `<span class="responsible">— ${a.responsible}</span>` : ''}
+                  </li>
+                `).join("")}
+              </ul>
+            </div>
+          `).join("")}
+        </div>
+      `).join("");
 
-      timeline.innerHTML = html;
-
+      // Анимация появления
       setTimeout(() => {
-        timeline.querySelectorAll('.task').forEach(el => el.classList.add('visible'));
+        kanbanBoard.querySelectorAll('.task-card').forEach((el, i) => {
+          el.style.transitionDelay = `${i * 50}ms`;
+          el.classList.add('visible');
+        });
       }, 10);
     }
 
-    statusFilter.addEventListener('change', render);
-    search.addEventListener('input', render);
+    searchInput.addEventListener('input', render);
     render();
     app.classList.remove('fade-out');
   }, 300);

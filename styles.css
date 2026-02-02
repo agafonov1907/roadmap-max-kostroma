@@ -1,15 +1,12 @@
 :root {
-  --bg-dark: rgba(0, 0, 0, 0.75); /* Усиленное затемнение */
-  --card-bg: rgba(255, 255, 255, 0.95); /* Почти белый, с небольшой прозрачностью */
-  --text-color: #111; /* Тёмный текст */
+  --bg-dark: rgba(0, 0, 0, 0.75);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-color: #111;
   --link-color: #1976d2;
-  --not-started: #d32f2f;   /* Красный — не выполнено */
-  --in-progress: #ff9800;   /* Оранжевый — в работе */
-  --completed: #4caf50;     /* Зелёный — выполнено */
-
-  /* Цвета для заголовков и акцентов */
+  --not-started: #f44336;
+  --in-progress: #ff9800;
+  --completed: #4caf50;
   --accent-light: #ffffff;
-  --accent-dark: #000000;
 }
 
 * {
@@ -31,7 +28,6 @@ body {
   min-height: 100vh;
 }
 
-/* Общее затемнение фона */
 body::before {
   content: "";
   position: fixed;
@@ -43,7 +39,7 @@ body::before {
 header {
   padding: 24px 16px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.6); /* Более тёмная плашка под заголовком */
+  background: rgba(0, 0, 0, 0.6);
   position: relative;
   z-index: 10;
 }
@@ -52,15 +48,15 @@ header h1 {
   margin: 0;
   font-size: 28px;
   font-weight: 700;
-  color: var(--accent-light); /* Белый текст */
+  color: var(--accent-light);
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.3;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* Сильнее тень для читаемости */
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
 main {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 24px auto;
   padding: 0 16px;
 }
@@ -138,12 +134,6 @@ select, input {
   color: var(--text-color);
 }
 
-select:focus, input:focus {
-  outline: none;
-  border-color: var(--completed);
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
-}
-
 button.back {
   padding: 10px 14px;
   border-radius: 8px;
@@ -155,89 +145,64 @@ button.back {
   color: var(--text-color);
 }
 
-button.back:hover {
-  background: #d5d5d5;
-  transform: translateY(-1px);
-}
-
-/* === Задачи === */
-.timeline {
+/* === KANBAN BOARD === */
+.kanban-board {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 16px;
 }
 
-.task {
+.kanban-column {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 320px;
+  padding: 16px;
+  flex-shrink: 0;
+}
+
+.column-header {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid;
+}
+
+.column-header[data-status="Не выполнено"] { color: var(--not-started); border-color: var(--not-started); }
+.column-header[data-status="В работе"]      { color: var(--in-progress); border-color: var(--in-progress); }
+.column-header[data-status="Выполнено"]    { color: var(--completed); border-color: var(--completed); }
+
+.task-card {
   background: var(--card-bg);
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.task.visible {
+.task-card.visible {
   opacity: 1;
   transform: translateX(0);
 }
 
-.task-header {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.status {
-  padding: 4px 10px;
-  border-radius: 14px;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-}
-
-.status[data-status="Не выполнено"] { background: var(--not-started); }
-.status[data-status="В работе"]      { background: var(--in-progress); color: #000; }
-.status[data-status="Выполнено"]    { background: var(--completed); }
-
-/* === Дедлайн === */
-.deadline {
-  font-size: 13px;
-  color: var(--not-started);
-  font-weight: 500;
-  margin: 6px 0;
-}
-
-/* === Ссылка на задачу === */
-.task-link {
-  display: inline-block;
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--link-color);
-  text-decoration: none;
-}
-
-.task-link:hover {
-  text-decoration: underline;
-}
-
-.year-header {
-  margin-top: 32px;
-  margin-bottom: 16px;
-  color: var(--accent-light);
-  font-size: 20px;
-  font-weight: 700;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-}
-
-.month-header {
-  margin-top: 24px;
-  margin-bottom: 12px;
-  color: var(--accent-light);
-  font-size: 16px;
+.task-title {
   font-weight: 600;
-  opacity: 0.9;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.deadline, .activity-deadline {
+  font-size: 12px;
+  color: var(--not-started);
+  margin: 4px 0;
+}
+
+.activity-deadline {
+  font-style: italic;
 }
 
 .responsible {
@@ -246,6 +211,18 @@ button.back:hover {
   color: #666;
   margin-top: 2px;
   font-style: italic;
+}
+
+.task-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.task-link:hover {
+  text-decoration: underline;
 }
 
 .no-results {
@@ -257,9 +234,13 @@ button.back:hover {
   border-radius: 8px;
 }
 
-@media (max-width: 600px) {
-  header h1 { font-size: 20px; }
-  main { padding: 0 12px; }
-  .controls { flex-direction: column; }
-  select, input, button { width: 100%; }
+@media (max-width: 768px) {
+  .kanban-board {
+    flex-direction: column;
+    align-items: center;
+  }
+  .kanban-column {
+    width: 100%;
+    max-width: 100%;
+  }
 }
