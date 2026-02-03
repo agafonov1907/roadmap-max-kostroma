@@ -3,9 +3,9 @@
     "id": "andreeva",
     "name": "Андреева Л.А.",
     "kpi": {
-      "total": 3,
+      "total": 5,
       "completed": 0,
-      "in_progress": 3,
+      "in_progress": 5,
       "not_started": 0,
       "this_week": 0,
       "this_month": 0
@@ -13,8 +13,8 @@
     "tasks": [
       {
         "title": "Целевое обучение",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-03-01 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-03-01 00:00:00",
         "status": "В работе",
         "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA7518357FF375%253A45C9C57BE1574BA643258D92004F60F2%253Fprojection%255C2default;p=1342759541",
         "activities": [
@@ -26,8 +26,8 @@
       },
       {
         "title": "РПЦТ",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-02-26 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-02-26 00:00:00",
         "status": "В работе",
         "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA75183586F115%253A6EB31E265F644BA843258D8F00346576%253Fprojection%255C2default;p=514127451",
         "activities": [
@@ -39,13 +39,39 @@
       },
       {
         "title": "Яндекс Общий",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-02-16 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-02-16 00:00:00",
         "status": "В работе",
         "link": "",
         "activities": [
           {
             "title": "Ответы кураторов",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      },
+      {
+        "title": "Штаб по ИИ",
+        "date": "2026-02-03 00:00:00",
+        "deadline": "2026-02-06 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Подготовка к штабу ИИ",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      },
+      {
+        "title": "Рассылка сообщений",
+        "date": "2026-02-03 00:00:00",
+        "deadline": "2026-02-06 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Совещание с ЦУР и Дип",
             "responsible": "Андреева Л.А."
           }
         ]
@@ -57,8 +83,8 @@
     "name": "Бунецкий А.В.",
     "kpi": {
       "total": 4,
-      "completed": 0,
-      "in_progress": 4,
+      "completed": 1,
+      "in_progress": 3,
       "not_started": 0,
       "this_week": 0,
       "this_month": 0
@@ -66,9 +92,9 @@
     "tasks": [
       {
         "title": "МТС ИИ",
-        "date": "2025-02-22 00:00:00",
-        "deadline": "2025-02-23 00:00:00",
-        "status": "В работе",
+        "date": "2026-02-22 00:00:00",
+        "deadline": "2026-02-23 00:00:00",
+        "status": "Выполнено",
         "link": "none",
         "activities": [
           {
@@ -83,8 +109,8 @@
       },
       {
         "title": "Бот ДЦР",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-02-16 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-02-16 00:00:00",
         "status": "В работе",
         "link": "",
         "activities": [
@@ -96,8 +122,8 @@
       },
       {
         "title": "Бот ЗАГС",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-02-16 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-02-16 00:00:00",
         "status": "В работе",
         "link": "",
         "activities": [
@@ -109,8 +135,8 @@
       },
       {
         "title": "Цифровое развитие",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-02-16 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-02-16 00:00:00",
         "status": "В работе",
         "link": "",
         "activities": [
@@ -126,9 +152,9 @@
     "id": "katenin",
     "name": "Катенин Д.А.",
     "kpi": {
-      "total": 2,
+      "total": 3,
       "completed": 0,
-      "in_progress": 2,
+      "in_progress": 3,
       "not_started": 0,
       "this_week": 0,
       "this_month": 0
@@ -136,8 +162,8 @@
     "tasks": [
       {
         "title": "РГИС ЖКХ",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-03-01 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-03-01 00:00:00",
         "status": "В работе",
         "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA75183586F115%253A4FA0DD99F940B2FA43258D9200446478%253Fprojection%255C2default;p=-2077443490",
         "activities": [
@@ -149,13 +175,26 @@
       },
       {
         "title": "КСКО",
-        "date": "2025-02-02 00:00:00",
-        "deadline": "2025-02-26 00:00:00",
+        "date": "2026-02-02 00:00:00",
+        "deadline": "2026-02-26 00:00:00",
         "status": "В работе",
         "link": "",
         "activities": [
           {
             "title": "Свод КСКО",
+            "responsible": "Катенин Д.А."
+          }
+        ]
+      },
+      {
+        "title": "РГИС ЖКХ",
+        "date": "2026-02-03 00:00:00",
+        "deadline": "2026-02-06 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Тех.возможность присоеденения федеральных органов",
             "responsible": "Катенин Д.А."
           }
         ]
