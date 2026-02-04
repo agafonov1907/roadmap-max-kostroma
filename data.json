@@ -3,9 +3,9 @@
     "id": "andreeva",
     "name": "Андреева Л.А.",
     "kpi": {
-      "total": 5,
+      "total": 7,
       "completed": 0,
-      "in_progress": 5,
+      "in_progress": 7,
       "not_started": 0,
       "this_week": 0,
       "this_month": 0
@@ -72,6 +72,32 @@
         "activities": [
           {
             "title": "Совещание с ЦУР и Дип",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      },
+      {
+        "title": "Цифровой ликбез",
+        "date": "2026-02-03 00:00:00",
+        "deadline": "2026-02-25 00:00:00",
+        "status": "В работе",
+        "link": "",
+        "activities": [
+          {
+            "title": "Информац. поддержка",
+            "responsible": "Андреева Л.А."
+          }
+        ]
+      },
+      {
+        "title": "ТОР Бытовые услуги",
+        "date": "2026-02-03 00:00:00",
+        "deadline": "2026-02-06 00:00:00",
+        "status": "В работе",
+        "link": "https://sed.kostroma.gov.ru/cmj-web/?locale=ru#content;id=rkks%255C047FA7518357E1965%253A50E9E26E356A4B5A43258D93002DE08F%253Fprojection%255C2default;p=674924697",
+        "activities": [
+          {
+            "title": "Уточнить данные у исполнителя",
             "responsible": "Андреева Л.А."
           }
         ]
