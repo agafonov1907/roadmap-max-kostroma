@@ -2,15 +2,29 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Дедлайн‑экспресс</title>
+  <title>Роадмап задач сотрудников</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>Дедлайн‑экспресс</h1>
+    <h1>Роадмап задач сотрудников<br>Костромской области</h1>
   </header>
   <main id="app"></main>
+
+  <!-- Анимированный дым -->
+  <div class="smoke-container">
+    <svg viewBox="0 0 200 200" class="smoke smoke-1">
+      <path d="M30,180 Q50,140 70,160 Q90,120 110,150 Q130,110 150,140 Q170,100 190,130" fill="rgba(140, 120, 100, 0.35)" />
+    </svg>
+    <svg viewBox="0 0 200 200" class="smoke smoke-2">
+      <path d="M20,190 Q45,150 65,170 Q85,130 105,160 Q125,120 145,150 Q165,110 185,140" fill="rgba(130, 110, 90, 0.3)" />
+    </svg>
+    <svg viewBox="0 0 200 200" class="smoke smoke-3">
+      <path d="M40,170 Q60,130 80,150 Q100,110 120,140 Q140,100 160,130 Q180,90 200,120" fill="rgba(120, 100, 80, 0.25)" />
+    </svg>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
